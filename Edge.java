@@ -1,24 +1,34 @@
 
-public class TopologicalSort {
-  private boolean[] marked;
-  private Stack<Integer> stack=new Stack<>();
-  
-  public TopologicalSort(Digraph g){
-	  marked=new boolean[g.v()];
-	  for(int i=0;i<g.v();i++){
-		  if(!marked[i]){
-			  dfs(g,i);
-		  }
-	  }
-  }
-  private void dfs(Digraph g,int i){
-	  marked[i]=true;
-	  for(int w:g.adj(i)){
-		  if(!marked[w])dfs(g,w);
-	  }
-	  stack.push(i);
-  }
-  public Iterable<Integer> stack(){
-	  return stack;
-  }
+public class Edge implements Comparable<Edge> {
+
+	private final int v,w;
+	private final double weight;
+	
+	public Edge(int v, int w,int weight){
+		this.v=v;
+		this.w=w;
+		this.weight=w;
+	}
+	public int either(){
+		return v;
+	}
+	public int other(int i){
+		if(i==v)return w;
+		else return v;
+	}
+	
+	@Override
+	public int compareTo(Edge e) {
+		// TODO Auto-generated method stub
+		if(this.weight<e.weight)return -1;
+		else if(this.weight>e.weight)return 1;
+		else return 0;
+	}
+	public String toString(){
+		int i=either();
+		int j=other(i);
+		String s=i+"->"+j;
+		return s;
+	}
+
 }
